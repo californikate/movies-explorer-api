@@ -5,8 +5,8 @@ const NotFoundError = require('../errors/NotFoundError');
 
 const getMovies = (req, res, next) => {
   Movie.find({ owner: req.user._id })
-  .then((movies) => res.send(movies))
-  .catch(next);
+    .then((movies) => res.send(movies))
+    .catch(next);
 };
 
 const postMovie = (req, res, next) => {

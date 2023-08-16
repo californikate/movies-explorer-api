@@ -22,6 +22,8 @@ app.use(limiter);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(errors());
+
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });

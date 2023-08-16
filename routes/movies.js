@@ -25,9 +25,9 @@ router.post(
       movieId: Joi.number().required(),
       nameRU: Joi.string().required(),
       nameEN: Joi.string().required(),
-    })
+    }),
   }),
-  postMovie
+  postMovie,
 );
 
 router.delete(
@@ -37,7 +37,7 @@ router.delete(
       _id: Joi.string().required().length(24).hex(),
     }),
   }),
-  deleteMovie
+  deleteMovie,
 );
 
 module.exports = router;
