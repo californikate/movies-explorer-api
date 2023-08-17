@@ -1,6 +1,6 @@
-const { celebrate, Joi } = require('celebrate');
 const router = require('express').Router();
 const { postUser, login } = require('../controllers/users');
+const { postUserValidation, loginValidation } = require('../middlewares/validation');
 
 // краш тест сервера
 router.get('/crash-test', () => {
@@ -11,24 +11,13 @@ router.get('/crash-test', () => {
 
 router.post(
   '/signup',
-  celebrate({
-    body: Joi.object().keys({
-      email: Joi.string().required().email(),
-      password: Joi.string().required(),
-      name: Joi.string().min(2).max(30).required(),
-    }),
-  }),
+  postUserValidation,
   postUser,
 );
 
 router.post(
   '/signin',
-  celebrate({
-    body: Joi.object().keys({
-      email: Joi.string().required().email(),
-      password: Joi.string().required(),
-    }),
-  }),
+  loginValidation,
   login,
 );
 
