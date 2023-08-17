@@ -5,15 +5,16 @@ const BadRequestError = require('../errors/BadRequestError');
 const NotFoundError = require('../errors/NotFoundError');
 const ConflictError = require('../errors/ConflictError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
+const { errorMessages } = require('../utils/errorMessages');
 const { DEV_SECRET_KEY } = require('../utils/config');
 
 const getUserInfo = (req, res, next) => {
   User.findById(req.user._id)
-    .orFail(() => next(new NotFoundError('Пользователь по указанному id не найден')))
+    .orFail(() => next(new NotFoundError(errorMessages.NOT_FOUND)))
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'CastError') {
-        next(new BadRequestError('Переданы некорректные данные'));
+        next(new BadRequestError(errorMessages.BAD_REQUEST));
       } else {
         next(err);
       }
@@ -24,11 +25,11 @@ const updateUserInfo = (req, res, next) => {
   const { name, email } = req.body;
 
   User.findByIdAndUpdate(req.user._id, { name, email }, { new: true, runValidators: true })
-    .orFail(() => next(new NotFoundError('Пользователь с указанным id не найден')))
+    .orFail(() => next(new NotFoundError(errorMessages.NOT_FOUND)))
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new BadRequestError('Переданы некорректные данные при обновлении профиля'));
+        next(new BadRequestError(errorMessages.BAD_REQUEST));
       } else {
         next(err);
       }
@@ -49,9 +50,9 @@ const postUser = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new BadRequestError('Переданы некорректные данные при создании пользователя'));
+        next(new BadRequestError(errorMessages.BAD_REQUEST));
       } else if (err.code === 11000) {
-        next(new ConflictError('Пользователь с таким email уже существует'));
+        next(new ConflictError(errorMessages.CONFLICT));
       } else {
         next(err);
       }
