@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const UnauthorizedError = require('../errors/UnauthorizedError');
+const { DEV_SECRET_KEY } = require('../utils/config');
 
 const extractBearerToken = (header) => header.replace('Bearer ', '');
 
@@ -14,7 +15,7 @@ const auth = (req, res, next) => {
   let payload;
 
   try {
-    payload = jwt.verify(token, 'super-strong-secret');
+    payload = jwt.verify(token, DEV_SECRET_KEY);
   } catch (err) {
     next(new UnauthorizedError('Необходима авторизация'));
   }

@@ -5,6 +5,7 @@ const BadRequestError = require('../errors/BadRequestError');
 const NotFoundError = require('../errors/NotFoundError');
 const ConflictError = require('../errors/ConflictError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
+const { DEV_SECRET_KEY } = require('../utils/config');
 
 const getUserInfo = (req, res, next) => {
   User.findById(req.user._id)
@@ -64,7 +65,7 @@ const login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        'super-strong-secret',
+        DEV_SECRET_KEY,
       );
 
       res.status(200).send({ token });
