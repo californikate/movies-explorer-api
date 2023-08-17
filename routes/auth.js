@@ -20,6 +20,7 @@ router.post(
   }),
   postUser,
 );
+
 router.post(
   '/signin',
   celebrate({

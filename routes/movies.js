@@ -1,6 +1,6 @@
 const { celebrate, Joi } = require('celebrate');
 const router = require('express').Router();
-const LINK_REGEX = require('../utils/const');
+const { LINK_REGEX } = require('../utils/const');
 
 const {
   getMovies,
