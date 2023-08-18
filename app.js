@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
+const cors = require('cors');
 const limiter = require('./middlewares/limiter');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { DEV_DB_URL } = require('./utils/config');
@@ -13,7 +14,7 @@ const errorsMiddle = require('./middlewares/errors');
 const { PORT = 3000 } = process.env;
 
 const app = express();
-
+app.use(cors());
 mongoose.connect(DEV_DB_URL);
 app.use(helmet());
 
