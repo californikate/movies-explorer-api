@@ -8,6 +8,8 @@ const UnauthorizedError = require('../errors/UnauthorizedError');
 const { errorMessages } = require('../utils/errorMessages');
 const { DEV_SECRET_KEY } = require('../utils/config');
 
+const { NODE_ENV, JWT_SECRET } = process.env;
+
 const getUserInfo = (req, res, next) => {
   User.findById(req.user._id)
     .orFail(() => next(new NotFoundError(errorMessages.NOT_FOUND)))
@@ -66,7 +68,8 @@ const login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        DEV_SECRET_KEY,
+        NODE_ENV === 'production' ? JWT_SECRET : DEV_SECRET_KEY,
+        { expiresIn: '7d' },
       );
 
       res.status(200).send({ token });

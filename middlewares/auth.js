@@ -3,6 +3,8 @@ const UnauthorizedError = require('../errors/UnauthorizedError');
 const { errorMessages } = require('../utils/errorMessages');
 const { DEV_SECRET_KEY } = require('../utils/config');
 
+const { NODE_ENV, JWT_SECRET } = process.env;
+
 const extractBearerToken = (header) => header.replace('Bearer ', '');
 
 const auth = (req, res, next) => {
@@ -16,7 +18,7 @@ const auth = (req, res, next) => {
   let payload;
 
   try {
-    payload = jwt.verify(token, DEV_SECRET_KEY);
+    payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : DEV_SECRET_KEY);
   } catch (err) {
     next(new UnauthorizedError(errorMessages.UNAUTHORIZED));
   }
