@@ -3,9 +3,9 @@
 -----
 ### Бэкенд приложения
 
-Ссылка на репозиторий проекта: https://github.com/californikate/movies-explorer-api
-Домен:
-IP 
+* Ссылка на репозиторий проекта: https://github.com/californikate/movies-explorer-api
+* Домен: api.nekrasova.nomoreparties.co
+* IP 84.252.140.59
 -----
 ### Технологии
 
