@@ -42,10 +42,9 @@ const postMovie = (req, res, next) => {
     .then((movie) => res.status(201).send(movie))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new BadRequestError(errorMessages.BAD_REQUEST));
-      } else {
-        next(err);
+        return next(new BadRequestError(errorMessages.BAD_REQUEST));
       }
+      return next(err);
     });
 };
 
@@ -61,12 +60,11 @@ const deleteMovie = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'NotFoundError') {
-        next(new NotFoundError(errorMessages.NOT_FOUND));
-      } else if (err.name === 'CastError') {
-        next(new BadRequestError(errorMessages.BAD_REQUEST));
-      } else {
-        next(err);
+        return next(new NotFoundError(errorMessages.NOT_FOUND));
+      } if (err.name === 'CastError') {
+        return next(new BadRequestError(errorMessages.BAD_REQUEST));
       }
+      return next(err);
     });
 };
 

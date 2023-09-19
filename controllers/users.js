@@ -31,10 +31,9 @@ const updateUserInfo = (req, res, next) => {
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new BadRequestError(errorMessages.BAD_REQUEST));
-      } else {
-        next(err);
+        return next(new BadRequestError(errorMessages.BAD_REQUEST));
       }
+      return next(err);
     });
 };
 
