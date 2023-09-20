@@ -12,7 +12,7 @@ const { DEV_DB_URL } = require('./utils/config');
 const routes = require('./routes/index');
 const errorsMiddle = require('./middlewares/errors');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3005 } = process.env;
 
 const app = express();
 app.use(cors());
